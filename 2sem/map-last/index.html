@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Карта</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>    
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+
+    <script src="data.js"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<bodclass="btn"y>    
+    <div class = "str">
+        <div class = "btns">
+        <div class="btn" id="menu" onclick="setSettings()">Настройки</div>
+        <div class="btn" id="add" onclick="addToMap()">Добавить на карту</div>
+        </div>
+        <div id="map" ></div>
+    </div>
+    <script type="text/javascript">
+        var map;
+
+        var markerAdd;
+        var markerName, link;
+        var coordsX, coordsY;
+
+        var markerIsOn = false;
+        var lineIsOn = false;
+        var isFirstLine = true;
+        var markerIsSave = true;
+        var lineIsDisplay = false;
+
+        var fullSkreenIs = true;
+        var zoomIsOn = true;                       //true
+        var trafficIsOn = true;
+        var zoomSize = 15;
+
+        var count = 0;
+        var polyline;
+        var coords = [];
+        var traffic;
+        
+        
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+        DG.then(function () 
+        {
+            map = DG.map('map', {
+                center: [53.209077, 50.125091],
+                zoom: zoomSize,
+                fullscreenControl: fullSkreenIs,
+                zoomControl:  false                      //zoomIsOn
+            });
+            console.log("DG.Then complete");
+            displayMarker(); 
+
+            traffic = DG.control.traffic().addTo(map);
+            zoomControl = DG.control.zoom().addTo(map);
+            polyline = DG.polyline([], {color: 'green'}).addTo(map);
+
+            map.on('click', function(e) { 
+                var lat = e.latlng.lat;
+                var lng = e.latlng.lng;
+
+                console.log(lat + ', ' + lng);
+                
+                if (lineIsOn)
+                {
+                    coords.push([lat, lng]);
+                    if(isFirstLine)
+                    {
+                        polyline = DG.polyline(coords, {color: 'blue'}).addTo(map);
+                        isFirstLine = false;
+                    }
+                    else{polyline.setLatLngs(coords);}  
+                }
+
+                if (markerIsOn)
+                {                    
+                    coordsX = lat;
+                    coordsY = lng;
+                    //alert('ready');
+                    if (markerIsSave)
+                    {
+                        markerAdd = DG.marker([coordsX, coordsY], {opacity: 0.4}).addTo(map);
+                        markerIsSave = false;
+                    }
+                    else
+                    {
+                        markerAdd.setLatLng([coordsX, coordsY]);
+                    }
+                    console.log('ready');
+                }       
+            });  
+        });
+       
+        displayLines();
+       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+       function del()
+        {
+            coords.pop();
+            polyline.setLatLngs(coords);
+        }
+
+        function saveLine()
+        {
+            let name = prompt("Как назовём?");
+            saveCor.push([coords]);
+            $("div.ways").append('<div onclick="displayLine(this)" class = "saveWays" data="'+ count + '"> '+ name +' </div>');
+            console.log(saveCor);
+            coords = [];
+            polyline.setLatLngs(coords);
+            bool = true;
+            count++;
+            $("div#setData").remove();
+            lineIsOn = false;
+        }
+
+        function saveMarkerOnClick()
+        {
+            let name = prompt("Как назвать маркер?", "Маркер без имени");
+            let link = prompt("Всавте ссылку на картинку", "NULL");
+            markerIsOn = false;
+            markerAdd.bindPopup(name + "<br>" + '<img src="' + link + '">');
+            markerAdd.setOpacity(1.0); 
+            markerIsSave = true;
+            $("div#setData").remove();
+            Markers.push([name, coordsX, coordsY, link]);  
+        }
+
+        function addMarkerOnPoint()
+        {
+            let coordX = prompt("Введите первую координату", "0");
+            let coordY = prompt("Введите вторую координату", "0");
+            let name = prompt("Как назвать маркер?", "Маркер без имени");
+            let link = prompt("Вставте ссылку на картинку", "NULL");
+            Markers.push([name, coordX, coordY, link]);
+            displayMarker();
+            $("div#setData").remove();
+        }
+
+        function displayMarker()                                //функция отрисовки маркеров
+        {
+            for(i = 0; i < Markers.length; i++)                  //создание дефолтных маркеров
+            {
+                DG.marker([Markers[i][1], Markers[i][2]]).addTo(map).bindPopup(Markers[i][0] + "<br>" + '<img src="' + Markers[i][3] + '">');
+            }
+        }
+
+        function displayLines()                                    //отрисовка 
+        {
+            for (var i = 0; i < saveCor.length; i++)
+            {
+                let name = 'Сохранённая кривая ' + (count + 1);
+                $("div.ways").append('<div onclick="displayLine(this)" class = "saveWays" data="'+ count + '"> '+ name +' </div>');
+                count++;
+            }
+        }
+
+        function displayLine(data)
+        {
+            polyline.setLatLngs([]);
+            let c = ($(data).attr("data"));
+            polyline = DG.polyline(saveCor[c], {color: 'green'}).addTo(map);
+            lineIsDisplay = true;
+        }
+        
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function addToMap()
+        {
+            $("body").append('<div id="setData">Вы можете выбрать что добавить<br><button onclick="addMarker()" class="">Маркер</button><button onclick="addLine()" class="">Кривую маршрута</button><button style="bottom: 10px; left: 50%; transform: translateX(-50%); opacity: .6; position: absolute;" onclick="removeWindow()" class="close-btn">Закрыть</button></div>');  
+            if (lineIsDisplay)
+            {
+                coords = [];
+                polyline.setLatLngs(coords);
+                lineIsDisplay = false;
+            }       
+        }
+
+        function setSettings()
+        {
+            //traffic.remove();
+            $("body").append('<div id="setData">Настройка некоторых параметров карты<div style="opacity: .5">Кликните для включения опции<br>Включенные опции имеют меньшую прозрачность</div><button id="setZoom" onclick="setZoom()">кнопки "Приблизить"/"Отдалить"</button><br><button id="setTraffic" onclick="setTraffic()">Трафик</button><button style="bottom: 10px; left: 50%; transform: translateX(-50%); opacity: .6; position: absolute;" onclick="removeWindow()" class="close-btn">Закрыть</button></div>')
+            
+    
+        }
+
+        function removeWindow()
+        {
+            $("div#setData").remove();
+        }
+
+        function setZoom() 
+        {
+            if (zoomIsOn)
+            {
+                zoomControl.remove();
+                //zoomControl = DG.control.zoom().addTo(map);
+                $("button#setZoom").attr('style', "opacity: .5");
+                zoomIsOn = false;
+            }
+            else
+            {
+                zoomControl = DG.control.zoom().addTo(map);
+                //zoomControl.remove();
+                $("button#setZoom").attr('style', "opacity: 1.0");
+                zoomIsOn = true;
+            }
+        }
+
+        function setTraffic()
+        {
+            if (trafficIsOn)
+            {
+                traffic.remove();
+                $("button#setTraffic").attr('style', "opacity: .5");
+                trafficIsOn = false;
+            }
+            else
+            {
+                traffic = DG.control.traffic().addTo(map);
+                $("button#setTraffic").attr('style', "opacity: 1.0");
+                trafficIsOn = true;
+            }
+            console.log("ready-traffic");
+        }
+
+        function addMarker()
+        {
+            $("div#setData").remove();
+            $("body").append('<div id="setData">Как добавим координаты?<br><button onclick="addMarkerOnClick()" class="">Маркер по клику на карте</button><button onclick="addMarkerOnPoint()" class="">Добавить маркер по координатам</button></div>');
+        }
+
+        function addLine()
+        {
+            $("div#setData").remove();
+            $("body").append('<div id="setData">Кликайте по карте <br><div style="opacity: .5">Для продолжения созданения кривой нажмите на кнопку сохранить ниже<br>Положение последней точки можно изменить</div></div>');
+            $('div#setData').append('<button onclick="saveLine()" class="save">Save way</button><button onclick="del()" class="delete">Delete last step</button>');
+            lineIsOn = true;
+        }
+
+        function addMarkerOnClick()
+        {
+            markerIsOn = true;
+            $("div#setData").remove();
+            $("body").append('<div id="setData">Кликните по карте <br><div style="opacity: .5">Для продолжения созданения маркера нажмите на кнопку ниже<br>Положение маркера можно изменить</div></div>');
+            $('div#setData').append('<br><button class="save" onclick="saveMarkerOnClick()">Save</button>');
+        }
+
+        function importData()                                           //
+        {
+            let data = 'var Markers = [';
+            for (var i = 0; i < Markers.length - 1; i++)
+            {
+                data +='[' + Markers[i] + '], ';
+            }
+            data+= '[' + Markers[Markers.length] + ']]'
+
+            data += '<br> var saveCor = [';
+            for (var i = 0; i < saveCor.length; i++)
+            {
+                data += '[';
+                for (var j = 0; j < saveCor[i].length; j++)            ///перебор кривых
+                {
+                    
+                    for (var k = 0; k < saveCor[i][j].length; k++)        ///перебор точек кривой
+                    {
+                        data += '[' + saveCor[i][j][k] + '], ';
+                    }
+                }
+            }
+            $("div#setData").remove();
+            $("body").append('<div id="setData">' + data + '</div>')
+        }
+
+        function displayCorrectData()
+            {
+                $("body").append("<div id='setData'>var Markers = [['Корпус 1',53.209756,50.124466,'https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL'], ['Главный корпус',53.20875,50.124451,'https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL'], ['Корпус 8',53.20935,50.125886,'https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL'], ['Маркер по клику',53.211913151415374,50.13067531584057,'NULL'], ['маркер по координатам',0,0,'NULL']];<br>var saveCor = [[[53.21319814006313,50.13213443754467], [53.21312104183111,50.136254310591546], [53.21119354093806,50.137026786787835], [53.21057672233767,50.137026786787835], [53.2103197119667,50.13024616239819], [53.20854629838898,50.130074501021234],[53.20720976429289,50.131791114790765], [53.20736398189306,50.14097499845776], [53.210602423289984,50.13848590849194], [53.209086040726135,50.13573932646069], [53.20636155757107,50.13561058042797], [53.206233039936485,50.131791114790765], [53.2063101505635,50.13041782377514]], [[53.209060338864255,50.1399021148518], [53.20717892117689,50.14131832121166], [53.20676767123371,50.13882923124584], [53.207538761639604,50.13835716245922], [53.207322857881465,50.137086866698155], [53.20691160931965,50.13725852807511], [53.20670598355872,50.13635730584612], [53.205857766865094,50.13665771325579], [53.20578065542406,50.13519859155167], [53.2050352376737,50.13502693017472], [53.20536939206174,50.13378238519181], [53.205806359253145,50.13275241693009], [53.206191914839536,50.13378238519181], [53.20655176359049,50.132580755553136], [53.20742566940523,50.1334390624379], [53.20770839982371,50.13112163384905], [53.208350962018955,50.13275241693009], [53.20912202393435,50.13056373437395]]]</div>");
+            }
+    </script>
+    
+    
+</body>
+</html>

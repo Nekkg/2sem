@@ -1,0 +1,157 @@
+body
+{
+background-color: white;
+background-image: url(../kapibara/water.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+height: 100vh;
+overflow: hidden;
+}
+h1
+{
+font-family:Arial;
+color: black;
+}
+h3
+{
+font-family:Arial;
+color:black;
+}
+#tHead 
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+#tNeck
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+
+#tBody 
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+
+#tPLaps
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+
+#tZLaps 
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+
+#tSzadi 
+{
+  width: 400px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  display: none;
+}
+
+
+#svg_8
+{
+fill:black;
+}
+#svg_8:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}
+#svg_11
+{
+fill:black;
+}
+#svg_11:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}
+#svg_18
+{
+fill:black;
+}
+#svg_18:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}
+#svg_19
+{
+fill:black;
+}
+#svg_19:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}
+#svg_23
+{
+fill:black;
+}
+#svg_23:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}
+#svg_20
+{
+fill:black;
+}
+#svg_20:hover
+{
+cursor:pointer;
+transition: 0.7s;
+fill:#1200;
+}

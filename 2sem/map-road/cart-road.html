@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Карта</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script>
+      let map, myIcon, polyline, coords;
+      let line = [];
+      let road = [];
+      let size;
+      let name;
+      let count = 0;
+
+      DG.then(function () {
+        map = DG.map("map", {
+          center: [53.20885986324375, 50.1291561126709],
+          zoom: 16,
+        });
+
+        DG.marker([53.209756, 50.124466])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Первый корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL" alt=""></a></div>'
+          );
+        DG.marker([53.20875, 50.124451])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Главный корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL" alt=""></a></div>'
+          );
+        DG.marker([53.20935, 50.125886])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Восьмой корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://i5.photo.2gis.com/images/branch/18/2533274834876191_edb9.jpg" alt=""></a></div>'
+          );
+        DG.marker([53.20822, 50.1301])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">СамГТУ Дом научной коллаборации имени Семёнова Н. Н.<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/5099256/2a0000018142ee9be8aad0501d473a53332b/XXXL" alt=""></a></div>'
+          );
+        clickedElement = document.getElementById("clicked_element");
+        clickedButton = document.getElementById("button-clear");
+        clickedButtonLast = document.getElementById("button-last-clear");
+        clickedButtonSave = document.getElementById("button-save");
+        coords = [];
+
+        map.on("click", function (e) {
+          coords.push([e.latlng.lat, e.latlng.lng]);
+          polyline = DG.polyline(coords, { color: "blue" }).addTo(map);
+
+          line.push(polyline);
+
+          clickedElement.innerHTML =
+            "[" + e.latlng.lat + ", " + e.latlng.lng + "]";
+        });
+
+        clickedButton.onclick = () => {
+          for (let i = 0; i < line.length; i++) {
+            line[i].remove();
+          }
+          coords = [];
+        };
+        clickedButtonLast.onclick = () => {
+          size = line.length;
+          for (let i = size - 1; i < size; i++) {
+            line[i].remove();
+            coords.pop();
+            line.length--;
+          }
+        };
+        clickedButtonSave.onclick = () => {
+          count++;
+          for (let coor of coords) {
+            road.push(coords[coor]);
+          }
+          name = prompt("Имя маршрута?", 1);
+          let div = document.createElement("div");
+          div.className = "alert";
+          div.innerHTML = name;
+
+          document.body.append(div);
+        };
+        map.fitBounds(polyline.getBounds());
+      });
+    </script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <body>
+      <div class="click-txt">Ваша точка на карте:<span class="click-txt" id="clicked_element">никуда</span></div>
+      <div id="map" style="width: 70%; height: 500px"></div>
+      <input class="btn" id="button-clear" type="button" value="Стереть маршрут" />
+      <input class="btn" id="button-last-clear" type="button" value="Стереть последнюю линию"/>
+      <input class="btn" id="button-save" type="button" value="Сохранить маршрут" />
+    </body>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="8900"
+   height="8600"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="8 marth-1.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.096046512"
+     inkscape:cx="4450.9685"
+     inkscape:cy="4180.2663"
+     inkscape:window-width="1920"
+     inkscape:window-height="1013"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <g
+     id="g8">
+    <title
+       id="title2">Layer 1</title>
+    <rect
+       stroke="#000"
+       id="svg_5"
+       height="2700"
+       width="2100"
+       y="2900"
+       x="4400"
+       fill="none" />
+    <image
+       stroke="null"
+       xlink:href="flower7.png"
+       id="svg_2"
+       height="2650"
+       width="2417"
+       y="2916.7166"
+       x="4133.31797" />
+    <path
+       id="svg_3"
+       d="m4346.01247,3918.24095"
+       opacity="NaN"
+       stroke="#000"
+       fill="#fff" />
+    <polyline
+       stroke="#000"
+       stroke-linecap="round"
+       id="svg_4"
+       points="5695.714983409226,4512.486605283193 5695.714983409226,4512.486605283193 "
+       fill="none" />
+  </g>
+</svg>

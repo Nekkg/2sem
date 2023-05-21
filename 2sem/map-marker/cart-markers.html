@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Карта</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script>
+      let map;
+      DG.then(function () {
+        map = DG.map("map", {
+          center: [53.209756, 50.124466],
+          zoom: 16,
+        });
+
+        DG.marker([53.209756, 50.124466])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Первый корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL" alt=""></a></div>'
+          );
+        DG.marker([53.20875, 50.124451])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Главный корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/1920875/2a00000174f188fc34e5d0c4f074ae617f93/XXXL" alt=""></a></div>'
+          );
+        DG.marker([53.20935, 50.125886])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">Восьмой корпус СамГТУ<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://i5.photo.2gis.com/images/branch/18/2533274834876191_edb9.jpg" alt=""></a></div>'
+          );
+        DG.marker([53.20822, 50.1301])
+          .addTo(map)
+          .bindPopup(
+            '<div class = "foto">СамГТУ Дом научной коллаборации имени Семёнова Н. Н.<br> <a href="https://samgtu.ru/" target="_blank"><img src="https://avatars.mds.yandex.net/get-altay/5099256/2a0000018142ee9be8aad0501d473a53332b/XXXL" alt=""></a></div>'
+          );
+      });
+    </script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      #map {
+        margin: 0 auto;
+      }
+      .foto {
+        text-align: center;
+        color: #fff;
+        font-family: Arial, sanc-serif;
+      }
+      img {
+        height: 100px;
+        margin: 10px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <div id="map" style="width: 70%; height: 500px"></div>
+    </body>
+  </body>
+</html>

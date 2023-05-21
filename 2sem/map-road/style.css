@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    padding: 32px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#map {
+    margin: 0 auto 24px;
+}
+.foto {
+    text-align: center;
+    color: #fff;
+    font-family: Arial;
+}
+img {
+    height: 100px;
+    margin: 0 auto;
+}
+.alert {
+    font-size: 20px;
+    color: #fff;
+    background-color: #666;
+    text-align: center;
+    width: 10%;
+    border-radius: 30px;
+    transition: 1.5s;
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 8px 12px;
+}
+.alert:hover {
+    background-color: black;
+}
+.click-txt{
+    font-size: 24px;
+    margin: 12px;
+}
+.btn {
+    background-color: #222;
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+    min-height: 44px;
+    min-width: 10px;
+    outline: none;
+    overflow: hidden;
+    padding: 9px 20px 8px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 25%;
+}
+.btn:hover,
+.btn:focus {
+    opacity: .75;
+}
+.leaflet-interactive{
+    stroke: green;
+}
